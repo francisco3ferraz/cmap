@@ -32,3 +32,8 @@ void wy_mum(uint64_t *A, uint64_t *B)
     *B = hi;
 #endif
 }
+
+uint64_t wy_mix(uint64_t A, uint64_t B) {
+    wy_mum(&A, &B);
+    return A ^ B;
+}

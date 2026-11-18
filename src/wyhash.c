@@ -1,5 +1,3 @@
-#define WY_PORTABLE
-
 #include "wyhash.h"
 
 void wy_mum(uint64_t *A, uint64_t *B)
@@ -15,7 +13,22 @@ void wy_mum(uint64_t *A, uint64_t *B)
     uint32_t b_hi = (uint32_t)(*B >> 32);
     uint32_t b_lo = (uint32_t)(*B);
 
-    uint64_t hh = (uint64_t)a_hi * b_hi + (a_hi + b_hi);
-    uint64_t ll = (uint64_t)a_lo * b_lo + (a_lo + b_lo);
+    uint64_t hh = (uint64_t)a_hi * b_hi;
+    uint64_t lh = (uint64_t)a_lo * b_hi;
+    uint64_t hl = (uint64_t)a_hi * b_lo;
+    uint64_t ll = (uint64_t)a_lo * b_lo;
+
+    // handle possible carry bit on lo (1)
+    uint64_t part = lh << 32;
+    lo += part;
+    if (lo < part) hi += 1;
+
+    // handle possible carry bit on lo (2)
+    part = hl << 32;
+    lo += part;
+    if (lo < part) hi += 1;
+
+    *A = lo;
+    *B = hi;
 #endif
 }

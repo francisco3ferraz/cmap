@@ -5,5 +5,8 @@
 
 void wy_mum(uint64_t *A, uint64_t *B);
 uint64_t wy_mix(uint64_t A, uint64_t B);
+void wy_r8(uint8_t p);
+
+int is_little_endian(void);
 
 #endif
